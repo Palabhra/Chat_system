@@ -78,7 +78,21 @@ public void run(){
      PrintWriter write;
      public thread2(PrintWriter wrote){
         this.write = wrote;
-  
+     }
+    public void run(){
+        while (true) {
+
+            BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+
+            try {
+                String data= br1.readLine();
+                write.println(data);
+                write.flush();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         
     }
 }
