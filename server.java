@@ -8,14 +8,27 @@ public class server {
         try {
              ServerSocket server= new ServerSocket(4444);
             
-            System.out.println("Expecting a connection");
+            // System.out.println("Expecting a connection");
              Socket socket = server.accept(); 
               this.br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
               this.writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            start_reading();
-            start_writing();
+            
+            if (!server.isClosed()) {
+                start_reading();
+                start_writing();
+           
+                //server.close();
+           
+            }
+            else{
+                System.out.println("else r...");
+                server.close();
+            }
+            
+            //     
         } catch (Exception e) {
             //TODO: handle exception
+           
         }
         
 
@@ -29,7 +42,7 @@ public class server {
         writing.start();
     }
     public static void main(String[] args) {
-        System.out.println("Server is started");
+        System.out.println("client2 is online...");
         server obj_1 = new server();
         
 
@@ -41,15 +54,17 @@ public class server {
  class thread1 extends Thread{
      int flag=0;
      BufferedReader scan;
+     PrintWriter write;
      public thread1(BufferedReader data){
          this.scan= data;
-         System.out.println("I'm constracctor...");
+        //  System.out.println("I'm constracctor...");
      }
 public void run(){
     
-    System.out.println("Reading...");
+    // System.out.println("Reading...");
     while (true) {
-        System.out.println("Enter your input- ");
+
+        // System.out.println("Enter your input- ");
     String input;
     try {
         input = scan.readLine();
@@ -61,11 +76,12 @@ public void run(){
             default:
                 break;
         }
+        System.out.println(input);
     } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
     }
-        System.out.println("Reading started...");
+        // System.out.println("Reading started...");
        
         if (this.flag ==1) {
             break;
@@ -78,6 +94,7 @@ public void run(){
      PrintWriter write;
      public thread2(PrintWriter wrote){
         this.write = wrote;
+        // System.out.println(this.write);
      }
     public void run(){
         while (true) {
@@ -85,6 +102,7 @@ public void run(){
             BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
 
             try {
+                // System.out.println("A2...");
                 String data= br1.readLine();
                 write.println(data);
                 write.flush();
